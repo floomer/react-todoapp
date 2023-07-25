@@ -1,5 +1,4 @@
 import React, {Dispatch, SetStateAction} from 'react';
-import {Tasks} from "../../StateCard";
 import {Button, Dialog, DialogTitle, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 
@@ -35,13 +34,9 @@ export const MuiEditTaskDialog:React.FC<TaskDialogProps> = (props) => {
                     label={taskName}
                     variant="outlined"
                     onChange = {(event) => newTaskName =  event.target.value}/>
-                <Button sx = {{
-                    m: 2,
-                    width: 100,
-                    alignSelf: 'center',
-                }}
+                <Button sx = {{m: 2, width: 100, alignSelf: 'center',}}
                         variant="contained"
-                        onClick = {(event) => handleTaskEdit(newTaskName)}>Create</Button>
+                        onClick = {() => handleTaskEdit(newTaskName)}>Create</Button>
             </Box>
         </Dialog>
     );

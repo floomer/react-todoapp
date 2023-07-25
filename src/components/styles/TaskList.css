@@ -1,0 +1,13 @@
+.MuiListItem-root{
+    border-bottom: 2px solid #1976D2;
+    padding: 5px 5px;
+    justify-content: space-between;
+}
+.MuiTypography-inherit {
+margin-right: 10px;
+font-family: monospace;
+font-weight: 400;
+letter-spacing: .1rem;
+color: inherit;
+text-decoration: none;
+}

@@ -1,30 +1,23 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
-import Box from "@mui/material/Box";
-import {Card, Typography} from '@mui/material';
-import {MuiButton} from "./button/MuiButton";
-import {MuiStateDialog} from "./Dialog/MuiStateDialog";
-import {StateCard} from "../StateCard";
-import Draggable from 'react-draggable';
+import React, {useState} from 'react';
+import {Typography, Box} from '@mui/material';
+import {MuiButton} from "./ui/button/MuiButton";
+import {MuiStateDialog} from "./ui/Dialog/MuiStateDialog";
+import {StateCard} from "./StateCard";
+import {useSelector} from "react-redux";
+import {RootState} from "../store";
+// import Draggable from 'react-draggable';
 
 interface DeskProps{
     value: string;
 }
 
-export interface Card{
-    id:number,
-    name:string,
-}
-
 export const WorkspaceDesk:React.FC<DeskProps> = ({value}) => {
     const [open, setOpen] = useState(false)
-    const [card, setCard] = useState<Card[]>([])
-
-    const createCard = (newCard:Card) => {
-        setCard([...card, newCard])
-    }
+    const card = useSelector((state:RootState) => state.card)
+    console.log(card)
 
     return (
-        <Box sx ={{
+        <Box sx ={{ //TODO: Find a way to move in .css
             display: 'flex',
             flexWrap: 'wrap',
             flexDirection: 'row',
@@ -61,14 +54,14 @@ export const WorkspaceDesk:React.FC<DeskProps> = ({value}) => {
             </Typography>
                 <MuiButton variant= {'contained'} buttonName={'Add State'} onClick={() => {setOpen(true)}}/>
             </Box>
-            <MuiStateDialog open={open} onClose={() => setOpen(false)} setCard={createCard}/>
+            <MuiStateDialog open={open} onClose={() => setOpen(false)}/>
 
                 {card.map((newCard,index) =>
                     // <Draggable>
                     <Box>
                         <StateCard card={newCard} key={index}/>
                     </Box>
-                    // </Draggable>
+                     // </Draggable>
                 )}
         </Box>
     );

@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Button, Dialog, DialogTitle, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
-import {Tasks} from "../../StateCard";
+import {useDispatch} from "react-redux";
+import {addTask} from "../../../store/taskSlice";
 
 interface TaskDialogProps {
     open: boolean;
     onClose: () => void;
-    setTask: ({}:Tasks) => void;
 }
 const style = {
     display: 'flex',
@@ -17,15 +17,16 @@ const style = {
 };
 
 export const MuiTaskDialog:React.FC<TaskDialogProps> = (props) => {
-    const {open, onClose, setTask} = props
+    const dispatch = useDispatch()
+    const {open, onClose} = props
     const [taskName, setTaskName] = useState('')
 
-    const addNewTask = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const addTaskHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const newTask = {
             id: Date.now(),
             title: taskName
         }
-            setTask(newTask)
+            dispatch(addTask(newTask))
             onClose()
     }
 
@@ -38,13 +39,9 @@ export const MuiTaskDialog:React.FC<TaskDialogProps> = (props) => {
                     label="Name of task"
                     variant="outlined"
                     onChange = {(event) => {setTaskName(event.target.value)}}/>
-                <Button sx = {{
-                    m: 2,
-                    width: 100,
-                    alignSelf: 'center',
-                }}
+                <Button sx = {{m: 2, width: 100, alignSelf: 'center',}}
                 variant="contained"
-                onClick = {(event) => addNewTask(event)}>Create</Button>
+                onClick = {(event) => addTaskHandler(event)}>Create</Button>
             </Box>
         </Dialog>
     );

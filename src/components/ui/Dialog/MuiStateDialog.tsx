@@ -1,12 +1,13 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Dialog, DialogTitle, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
-import {Card} from "../WorkspaceDesk";
+import {Card} from '../../../types';
+import {useDispatch} from "react-redux";
+import {addCard} from "../../../store/CardSlice";
 
 export interface StateDialogProps {
     open: boolean;
     onClose: () => void;
-    setCard: ({}:Card) => void;
 }
 
 const style = {
@@ -18,8 +19,9 @@ const style = {
 };
 
 export const MuiStateDialog:React.FC<StateDialogProps> = (props) => {
-    const {open, onClose, setCard} = props
+    const {open, onClose} = props
     const [name, setName] = useState('')
+    const dispatch = useDispatch()
 
     const addNewCard = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault()
@@ -27,7 +29,7 @@ export const MuiStateDialog:React.FC<StateDialogProps> = (props) => {
             id: Date.now(),
             name: name,
         }
-        setCard(newCard)
+        dispatch((addCard(newCard)))
         onClose()
     }
 
@@ -38,11 +40,7 @@ export const MuiStateDialog:React.FC<StateDialogProps> = (props) => {
                 <TextField id="outlined-basic" label="Name" variant="outlined" onChange = {(event) => {
                     setName(event.target.value)
                 }}/>
-                <Button sx = {{
-                    m: 2,
-                    width: 100,
-                    alignSelf: 'center',
-                }}
+                <Button sx = {{m: 2, width: 100, alignSelf: 'center',}}
                     variant="contained"
                     onClick = {(event) => addNewCard(event)}>Create</Button>
             </Box>

@@ -20,17 +20,17 @@ const style = {
 interface ModalProps{
     open: boolean;
     value:string;
-    onClose: (value:string) => void;
+    onClose: () => void;
     setValue: (name:string) => void;
 
 }
 
  export const MuiModal:React.FC<ModalProps> = (props) => {
-    const {open, value, onClose, setValue} = props
+    const {open, onClose, setValue} = props
      const [name, setName] = useState('')
      const handleSubmit = () => {
         setValue(name)
-         onClose(name)
+         onClose()
      }
 
     return (
@@ -45,11 +45,10 @@ interface ModalProps{
                         Enter Workspace name
                     </Typography>
                     <TextField id="outlined-basic" label="Name" variant="outlined" onChange = {(event) => setName(event.target.value)}/>
-                    <Button sx = {{
-                        mt: '5px',
-                    }}
-                            variant="contained"
-                            onClick = {handleSubmit}>Create</Button>
+                    <Button
+                        sx = {{mt: '5px',}}
+                        variant="contained"
+                        onClick = {handleSubmit}>Create</Button>
                 </Box>
             </Modal>
     );
