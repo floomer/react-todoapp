@@ -5,7 +5,7 @@ import {MuiStateDialog} from "./ui/Dialog/MuiStateDialog";
 import {StateCard} from "./StateCard";
 import {useSelector} from "react-redux";
 import {RootState} from "../store";
-// import Draggable from 'react-draggable';
+import Draggable from 'react-draggable';
 
 interface DeskProps{
     value: string;
@@ -14,7 +14,7 @@ interface DeskProps{
 export const WorkspaceDesk:React.FC<DeskProps> = ({value}) => {
     const [open, setOpen] = useState(false)
     const card = useSelector((state:RootState) => state.card)
-    console.log(card)
+    console.log('Cards:', card)
 
     return (
         <Box sx ={{ //TODO: Find a way to move in .css
@@ -55,13 +55,14 @@ export const WorkspaceDesk:React.FC<DeskProps> = ({value}) => {
                 <MuiButton variant= {'contained'} buttonName={'Add State'} onClick={() => {setOpen(true)}}/>
             </Box>
             <MuiStateDialog open={open} onClose={() => setOpen(false)}/>
-
                 {card.map((newCard,index) =>
-                    // <Draggable>
-                    <Box>
-                        <StateCard card={newCard} key={index}/>
-                    </Box>
-                     // </Draggable>
+                    <Draggable handle={'div'}>
+                        {/*<Box>*/}
+                        <div>
+                            <StateCard card={newCard} key={index}/>
+                        </div>
+                        {/*</Box>*/}
+                     </Draggable>
                 )}
         </Box>
     );

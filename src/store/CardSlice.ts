@@ -10,9 +10,13 @@ const cardSlice = createSlice({
     reducers:{
         addCard: (state, action) => {
             state.push(action.payload)
+        },
+        deleteCard: (state, action) => {
+            const currentCardID = state.findIndex((elem) => elem.id === action.payload.id)
+            state.splice(currentCardID,1)
         }
     }
 })
 
-export const {addCard} = cardSlice.actions // ?
+export const {addCard, deleteCard} = cardSlice.actions // ?
 export default cardSlice.reducer // ?

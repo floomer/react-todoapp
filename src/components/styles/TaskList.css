@@ -3,6 +3,9 @@
     padding: 5px 5px;
     justify-content: space-between;
 }
+.MuiListItem-root:hover{
+   background-color: lightgrey;
+}
 .MuiTypography-inherit {
 margin-right: 10px;
 font-family: monospace;

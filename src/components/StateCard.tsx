@@ -1,37 +1,54 @@
 import React, {useState} from 'react';
-import {Button, Card, CardContent, List, Typography, StyledEngineProvider, Tooltip} from "@mui/material";
+import {Button, Card, CardContent, List, Typography, StyledEngineProvider, Tooltip, Box} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {MuiTaskDialog} from "./ui/Dialog/MuiTaskDialog";
 import {TaskList} from "./TaskList";
 import './styles/StateCard.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { RootState } from '../store';
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import {deleteCard} from "../store/CardSlice";
+
 
 interface StateCardProps{
-    card: {id: number, name: string};
-    key: number
+    card: {id: number, name: string, color: string};
 }
+
 export const StateCard:React.FC<StateCardProps> = (props) => {
+    const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
-    const task = useSelector((state:RootState) => state.task) // ?? Why state.task
-    console.log(task)
+    const task = useSelector((state:RootState) => state.task)
+    console.log('Tasks:', task)
 
     return (
         <StyledEngineProvider injectFirst>
-        <Card>
-            <CardContent>
+        <Card >
+            <CardContent sx ={{backgroundColor: props.card.color}}>
                 <Typography gutterBottom>{props.card.name}</Typography>
-                <Tooltip title={'Add a task'}>
-                <Button
-                    sx = {{color: 'white', minWidth: '40px',}}
-                    startIcon={<AddIcon/>}
-                    onClick = {() => {setOpen(true)}}>
-                </Button>
-                </Tooltip>
+                    <Box>
+                        <Tooltip title={'Delete Task'}>
+                            <Button
+                                sx={{color:'white', margin:0, padding:0, width: '35px', minWidth:0, justifyContent: 'flex-end'}}
+                                startIcon={<DeleteOutlinedIcon />}
+                                onClick={(event) => {dispatch(deleteCard(event.target))}}/>
+                        </Tooltip>
+
+                        <Tooltip title={'Add a task'}>
+                        <Button
+                            sx = {{color: 'white', minWidth: '40px',}}
+                            startIcon={<AddIcon/>}
+                            onClick = {() => {setOpen(true)}}>
+                        </Button>
+                        </Tooltip>
+                    </Box>
             </CardContent>
-            <MuiTaskDialog open={open} onClose={() => setOpen(false)}/>
-            <List sx = {{paddingBottom: '0'}}>
-                {task.map((element, index) => <TaskList task={element} key = {index}/>)}
+            <MuiTaskDialog state={props.card.name} open={open} onClose={() => setOpen(false)}/>
+            <List sx = {{padding: '0'}}>
+                {task.map((element, index) =>
+                element.state === props.card.name ?
+                    <TaskList task={element} key = {index}/>
+                    : false
+                )}
             </List>
         </Card>
         </StyledEngineProvider>

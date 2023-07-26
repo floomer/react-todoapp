@@ -5,9 +5,11 @@ import {useDispatch} from "react-redux";
 import {addTask} from "../../../store/taskSlice";
 
 interface TaskDialogProps {
-    open: boolean;
-    onClose: () => void;
+    open: boolean,
+    onClose: () => void,
+    state: string,
 }
+
 const style = {
     display: 'flex',
     flexFlow: 'column wrap',
@@ -24,7 +26,9 @@ export const MuiTaskDialog:React.FC<TaskDialogProps> = (props) => {
     const addTaskHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const newTask = {
             id: Date.now(),
-            title: taskName
+            state: props.state,
+            title: taskName,
+            description: '',
         }
             dispatch(addTask(newTask))
             onClose()
@@ -32,7 +36,7 @@ export const MuiTaskDialog:React.FC<TaskDialogProps> = (props) => {
 
     return (
         <Dialog onClose={onClose} open={open}>
-            <DialogTitle>Set name of Task</DialogTitle>
+            <DialogTitle sx={{backgroundColor:'#1976D2', color:'white'}}>Add Task</DialogTitle>
             <Box sx={style}>
                 <TextField
                     id="outlined-basic"

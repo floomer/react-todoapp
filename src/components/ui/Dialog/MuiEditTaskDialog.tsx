@@ -1,13 +1,16 @@
 import React, {Dispatch, SetStateAction} from 'react';
 import {Button, Dialog, DialogTitle, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
+import {useDispatch} from "react-redux";
+import {deleteTask} from '../../../store/taskSlice'
 
 
 interface TaskDialogProps {
-    open: boolean;
-    onClose: () => void;
-    taskName: string;
-    setNewTaskName: Dispatch<SetStateAction<string>>;
+    open: boolean,
+    onClose: () => void,
+    taskName: string,
+    setNewTaskName: Dispatch<SetStateAction<string>>,
+    taskID: number,
 }
 const style = {
     display: 'flex',
@@ -18,7 +21,8 @@ const style = {
 };
 
 export const MuiEditTaskDialog:React.FC<TaskDialogProps> = (props) => {
-    const {open, onClose, taskName, setNewTaskName} = props
+    const dispatch = useDispatch()
+    const {open, onClose, taskName, setNewTaskName, taskID} = props
     let newTaskName:string
 
     const handleTaskEdit = (taskName:string) => {
@@ -27,16 +31,25 @@ export const MuiEditTaskDialog:React.FC<TaskDialogProps> = (props) => {
     }
     return (
         <Dialog onClose={onClose} open={open}>
-            <DialogTitle>Enter new task name</DialogTitle>
+            <DialogTitle>Edit Task</DialogTitle>
             <Box sx={style}>
                 <TextField
                     id="outlined-basic"
                     label={taskName}
                     variant="outlined"
                     onChange = {(event) => newTaskName =  event.target.value}/>
-                <Button sx = {{m: 2, width: 100, alignSelf: 'center',}}
+                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <Button sx = {{m: 2, width: 100, alignSelf: 'center',}}
+                            variant="contained"
+                            onClick = {() => handleTaskEdit(newTaskName)}>Edit
+                    </Button>
+                    <Button sx = {{m: 2, width: 130, alignSelf: 'center',}}
                         variant="contained"
-                        onClick = {() => handleTaskEdit(newTaskName)}>Create</Button>
+                        color="error"
+                        onClick = {() => dispatch(deleteTask(taskID))}
+                    >Delete Task
+                    </Button>
+                </Box>
             </Box>
         </Dialog>
     );
