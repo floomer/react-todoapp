@@ -1,16 +1,16 @@
-.MuiListItem-root{
-    border-bottom: 2px solid #1976D2;
+.MuiListItem-root {
+    border-bottom: 2px solid #1976d2;
     padding: 5px 5px;
     justify-content: space-between;
 }
-.MuiListItem-root:hover{
-   background-color: lightgrey;
+.MuiListItem-root:hover {
+    background-color: lightgrey;
 }
 .MuiTypography-inherit {
-margin-right: 10px;
-font-family: monospace;
-font-weight: 400;
-letter-spacing: .1rem;
-color: inherit;
-text-decoration: none;
+    margin-right: 10px;
+    font-family: monospace;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+    color: inherit;
+    text-decoration: none;
 }

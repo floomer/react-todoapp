@@ -1,18 +1,19 @@
-.MuiCard-root{
+.MuiCard-root {
     min-width: 199px;
     min-height: 20px;
     margin: 5px 5px;
     border-radius: 0;
     /*cursor: grab;*/
 }
-.MuiCardContent-root{
+.MuiCardContent-root {
     display: flex;
     flex-flow: row nowrap;
     padding: 0;
     justify-content: space-between;
     /*background-color: #1976D2;*/
+    cursor: grab;
 }
-.MuiTypography-gutterBottom{
+.MuiTypography-gutterBottom {
     font-size: 16px;
     text-align: center;
     color: white;
