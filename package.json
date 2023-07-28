@@ -2,6 +2,7 @@
     "name": "react-todo-app",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://floomer.github.io/react-todoapp",
     "dependencies": {
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
@@ -28,6 +29,8 @@
         "web-vitals": "^2.1.4"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
@@ -56,6 +59,7 @@
         "@types/redux": "^3.6.0",
         "@types/redux-thunk": "^2.1.0",
         "@types/styled-components": "^5.1.26",
+        "gh-pages": "^5.0.0",
         "prettier": "3.0.0"
     }
 }
