@@ -55,18 +55,17 @@ export const MuiStateDialog: React.FC<StateDialogProps> = (props) => {
                 {'Add state'}
             </DialogTitle>
             <Box sx={style}>
-                <InputLabel id="demo-simple-select-label">Name</InputLabel>
                 <TextField
                     required
                     id="outlined-basic"
-                    label=""
+                    label="Name"
                     variant="outlined"
                     onChange={(event) => {
                         setName(event.target.value)
                     }}
                 />
                 <Box sx={{ mt: '10px' }}>
-                    <FormControl variant={'filled'}>
+                    <FormControl variant={'outlined'}>
                         <InputLabel id="select-color-label">Color</InputLabel>
                         <Select
                             labelId="select-color-label"

@@ -19,5 +19,5 @@ const cardSlice = createSlice({
     },
 })
 
-export const { addCard, deleteCard } = cardSlice.actions // ?
-export default cardSlice.reducer // ?
+export const { addCard, deleteCard } = cardSlice.actions
+export default cardSlice.reducer
