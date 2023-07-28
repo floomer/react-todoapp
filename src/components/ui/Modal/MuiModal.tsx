@@ -45,7 +45,7 @@ export const MuiModal: React.FC<ModalProps> = (props) => {
                     Add Workspace
                 </Typography>
                 <TextField
-                    sx={{mt: '10px'}}
+                    sx={{ mt: '10px' }}
                     id="outlined-basic"
                     label="Name"
                     variant="outlined"

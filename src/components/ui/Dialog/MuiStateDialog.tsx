@@ -65,7 +65,7 @@ export const MuiStateDialog: React.FC<StateDialogProps> = (props) => {
                         setName(event.target.value)
                     }}
                 />
-                <Box sx={{mt:'10px'}}>
+                <Box sx={{ mt: '10px' }}>
                     <FormControl variant={'filled'}>
                         <InputLabel id="select-color-label">Color</InputLabel>
                         <Select
@@ -85,9 +85,9 @@ export const MuiStateDialog: React.FC<StateDialogProps> = (props) => {
                     </FormControl>
                 </Box>
                 <Button
-                    sx={{ m: 2, width: 100, alignSelf: 'center', mt:'30px' }}
+                    sx={{ m: 2, width: 100, alignSelf: 'center', mt: '30px' }}
                     variant="contained"
-                    onClick={(event) => name?addNewCard(event) : false}
+                    onClick={(event) => (name ? addNewCard(event) : false)}
                 >
                     Create
                 </Button>

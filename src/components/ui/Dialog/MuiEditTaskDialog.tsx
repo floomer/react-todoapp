@@ -1,9 +1,9 @@
-import React, {Dispatch, SetStateAction, useState} from 'react'
+import React, {useState } from 'react'
 import { Button, Dialog, DialogTitle, TextField } from '@mui/material'
 import Box from '@mui/material/Box'
 import { useDispatch } from 'react-redux'
-import {deleteTask, editTask} from '../../../store/taskSlice'
-import {Task} from "../../../types";
+import { deleteTask, editTask } from '../../../store/taskSlice'
+import { Task } from '../../../types'
 
 interface TaskDialogProps {
     open: boolean
@@ -24,13 +24,15 @@ export const MuiEditTaskDialog: React.FC<TaskDialogProps> = (props) => {
     const [newTaskName, setNewTaskName] = useState('')
     const [newDescription, setNewDescription] = useState('')
 
-    const taskEditHandle = (event:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const taskEditHandle = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
         event.preventDefault()
         const newTask = {
             id: task.id,
             state: task.state,
             title: newTaskName,
-            description: task.description,
+            description: newDescription,
         }
         dispatch(editTask(newTask))
         onClose()
@@ -44,16 +46,18 @@ export const MuiEditTaskDialog: React.FC<TaskDialogProps> = (props) => {
                     id="outlined-basic"
                     label={task.title}
                     variant="outlined"
-                    onChange={(event) => (setNewTaskName(event.target.value))}
+                    onChange={(event) => setNewTaskName(event.target.value)}
                 />
                 <TextField
-                    sx={{mt:'10px'}}
+                    sx={{ mt: '10px' }}
                     id="task-description"
-                    label={task.description? task.description: 'Description'}
+                    label={task.description ? task.description : 'Description'}
                     multiline
                     maxRows={5}
                     variant="outlined"
-                    onChange={(event) => {setNewDescription(event.target.value)}}
+                    onChange={(event) => {
+                        setNewDescription(event.target.value)
+                    }}
                 />
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <Button

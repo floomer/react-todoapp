@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import { Typography, Box } from '@mui/material'
+import { Typography, Box, List } from '@mui/material'
 import { MuiButton } from './ui/button/MuiButton'
 import { MuiStateDialog } from './ui/Dialog/MuiStateDialog'
 import { StateCard } from './StateCard'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
+import { TaskList } from './TaskList'
+import './styles/WorkspaceDesk.css'
+import { Card, Task } from '../types'
+import { editTaskState } from '../store/taskSlice'
 
 interface DeskProps {
     value: string
@@ -12,51 +16,65 @@ interface DeskProps {
 
 export const WorkspaceDesk: React.FC<DeskProps> = ({ value }) => {
     const [open, setOpen] = useState(false)
-    const card = useSelector((state: RootState) => state.card)
-    console.log('Cards:', card)
+    const [currentTask, setCurrentTask] = useState<Task>()
+    const [currentState, setCurrentState] = useState<Card>()
+    const cardList = useSelector((state: RootState) => state.card)
+    const taskList = useSelector((state: RootState) => state.task)
+    const dispatch = useDispatch()
+
+    function dragStartHandler(
+        event: React.DragEvent<Element>,
+        task: Task,
+        card: Card
+    ) {
+        setCurrentTask(task)
+        setCurrentState(card)
+    }
+
+    function dragOverHandler(event: React.DragEvent<Element>) {
+        event.preventDefault()
+    }
+
+    function dropHandler(
+        event: React.DragEvent<Element>,
+        task: Task,
+        card: Card
+    ) {
+        event.preventDefault()
+        if (currentTask) {
+            const startIndex = taskList.indexOf(currentTask)
+            const dropIndex = taskList.indexOf(task)
+            const currentTaskID = taskList[startIndex].id
+            const startState = taskList[startIndex].state
+            const dropState = taskList[dropIndex].state
+
+            if (startState !== dropState) {
+                dispatch(
+                    editTaskState({ id: currentTaskID, dropState: dropState })
+                )
+            }
+        }
+    }
+
+    function dropToEmptyCard(event: React.DragEvent<Element>, card: Card) {
+        if (currentTask) {
+            const startIndex = taskList.indexOf(currentTask)
+            const startState = taskList[startIndex].state
+            const currentTaskID = taskList[startIndex].id
+
+            if (startState !== card.name) {
+                dispatch(
+                    editTaskState({ id: currentTaskID, dropState: card.name })
+                )
+            }
+        }
+    }
 
     return (
-        <Box
-            sx={{
-                //TODO: Find a way to move in .css
-                display: 'flex',
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                alignItems: 'flex-start',
-                alignContent: 'flex-start',
-                backgroundColor: '#425C6C',
-                width: '98%',
-                height: '730px',
-                margin: '30px 20px',
-                borderRadius: '20px',
-            }}
-        >
-            <Box
-                sx={{
-                    width: '100%',
-                    margin: 0,
-                    padding: 0,
-                    paddingRight: '20px',
-                    display: 'flex',
-                    flexFlow: 'row nowrap',
-                    justifyContent: 'space-between',
-                    borderBottom: '1px solid teal',
-                }}
-            >
-                <Typography
-                    variant="h6"
-                    sx={{
-                        ml: 2,
-                        mt: 1,
-                        width: '380px',
-                        color: 'white',
-                        fontFamily: 'monospace',
-                        fontWeight: 700,
-                        letterSpacing: '.3rem',
-                        textDecoration: 'none',
-                    }}
-                >
-                    {' '}
+
+        <Box className={'workspace'}>
+            <Box className={'workspace-header'}>
+                <Typography className={'workspace-header__title'} variant="h6">
                     {value}
                 </Typography>
                 <MuiButton
@@ -68,9 +86,51 @@ export const WorkspaceDesk: React.FC<DeskProps> = ({ value }) => {
                 />
             </Box>
             <MuiStateDialog open={open} onClose={() => setOpen(false)} />
-            {card.map((newCard, index) => (
-                <StateCard card={newCard} key={index} />
-            ))}
+            <div className={'main-block'} style={{ display: 'flex' }}>
+                {cardList.map((card, index) => {
+                    return (
+                        <Box>
+                            <StateCard
+                                card={card}
+                                key={index}
+                                onDragOver={(event) => dragOverHandler(event)}
+                                onDrop={(event) => dropToEmptyCard(event, card)}
+                            >
+                                <List sx={{ padding: '0' }}>
+                                    {taskList.map((task) =>
+                                        card.name === task.state ? (
+                                            <TaskList
+                                                task={task}
+                                                onDragStart={(event) =>
+                                                    dragStartHandler(
+                                                        event,
+                                                        task,
+                                                        card
+                                                    )
+                                                }
+                                                onDragOver={(event) =>
+                                                    dragOverHandler(event)
+                                                }
+                                                onDragLeave={() => {}}
+                                                onDragEnd={() => {}}
+                                                onDrop={(event) =>
+                                                    dropHandler(
+                                                        event,
+                                                        task,
+                                                        card
+                                                    )
+                                                }
+                                            />
+                                        ) : (
+                                            false
+                                        )
+                                    )}
+                                </List>
+                            </StateCard>
+                        </Box>
+                    )
+                })}
+            </div>
         </Box>
     )
 }

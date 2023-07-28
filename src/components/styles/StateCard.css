@@ -3,15 +3,12 @@
     min-height: 20px;
     margin: 5px 5px;
     border-radius: 0;
-    /*cursor: grab;*/
 }
 .MuiCardContent-root {
     display: flex;
     flex-flow: row nowrap;
     padding: 0;
     justify-content: space-between;
-    /*background-color: #1976D2;*/
-    cursor: grab;
 }
 .MuiTypography-gutterBottom {
     font-size: 16px;

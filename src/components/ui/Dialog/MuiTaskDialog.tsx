@@ -52,13 +52,15 @@ export const MuiTaskDialog: React.FC<TaskDialogProps> = (props) => {
                     }}
                 />
                 <TextField
-                    sx={{mt:'10px'}}
+                    sx={{ mt: '10px' }}
                     id="task-description"
                     label="Description"
                     multiline
                     maxRows={5}
                     variant="outlined"
-                    onChange={(event) => {setDescription(event.target.value)}}
+                    onChange={(event) => {
+                        setDescription(event.target.value)
+                    }}
                 />
                 <Button
                     sx={{ m: 2, width: 100, alignSelf: 'center' }}

@@ -3,7 +3,6 @@ import {
     Button,
     Card,
     CardContent,
-    List,
     Typography,
     StyledEngineProvider,
     Tooltip,
@@ -11,30 +10,27 @@ import {
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { MuiTaskDialog } from './ui/Dialog/MuiTaskDialog'
-import { TaskList } from './TaskList'
 import './styles/StateCard.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
+import { useDispatch } from 'react-redux'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import { deleteCard } from '../store/CardSlice'
-import Draggable from "react-draggable";
 
 interface StateCardProps {
     card: { id: number; name: string; color: string }
+    children: any
+    onDragOver: (event: React.DragEvent) => void
+    onDrop: (event: React.DragEvent) => void
 }
 
-export const StateCard: React.FC<StateCardProps> = (props) => {
+export const StateCard: React.FC<StateCardProps> = ({ card, ...props }) => {
     const dispatch = useDispatch()
     const [open, setOpen] = useState(false)
-    const task = useSelector((state: RootState) => state.task)
-    console.log('Tasks:', task)
 
     return (
         <StyledEngineProvider injectFirst>
-            <Draggable handle='.draggable-content'>
-            <Card>
-                <CardContent sx={{ backgroundColor: props.card.color }} className={'draggable-content'}>
-                    <Typography gutterBottom>{props.card.name}</Typography>
+            <Card draggable={'true'} {...props}>
+                <CardContent sx={{ backgroundColor: card.color }}>
+                    <Typography gutterBottom>{card.name}</Typography>
                     <Box>
                         <Tooltip title={'Delete Task'}>
                             <Button
@@ -65,19 +61,12 @@ export const StateCard: React.FC<StateCardProps> = (props) => {
                     </Box>
                 </CardContent>
                 <MuiTaskDialog
-                    state={props.card.name}
+                    state={card.name}
                     open={open}
                     onClose={() => setOpen(false)}
                 />
-                    <List sx={{ padding: '0' }}>
-                        {task.map((element, index) =>
-                            element.state === props.card.name ? (
-                                <TaskList task={element} key={index} card={props.card}/>
-                            ) : false
-                        )}
-                    </List>
+                {props.children}
             </Card>
-            </Draggable>
         </StyledEngineProvider>
     )
 }
