@@ -25,7 +25,7 @@ interface ModalProps {
     setValue: (name: string) => void
 }
 
-export const MuiModal: React.FC<ModalProps> = (props) => {
+export const MyModal: React.FC<ModalProps> = (props) => {
     const { open, onClose, setValue } = props
     const [name, setName] = useState('')
     const handleSubmit = () => {

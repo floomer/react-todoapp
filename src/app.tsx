@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import './App.css'
+import './app.css'
 import { ResponsiveAppBar } from './components/ui/ResponsiveAppBar'
 import { WorkspaceDesk } from './components/WorkspaceDesk'
-import { MuiButton } from './components/ui/button/MuiButton'
-import { MuiModal } from './components/ui/Modal/MuiModal'
+import { AddButton } from './components/ui/button/AddButton'
+import { MyModal } from './components/ui/modal/MyModal'
 import { Provider } from 'react-redux'
 import { store } from './store'
 
@@ -18,7 +18,7 @@ export function App() {
                 {value ? (
                     <WorkspaceDesk value={value} />
                 ) : (
-                    <MuiButton
+                    <AddButton
                         variant={'outlined'}
                         buttonName={'Add a Workspace'}
                         onClick={() => {
@@ -26,7 +26,7 @@ export function App() {
                         }}
                     />
                 )}
-                <MuiModal
+                <MyModal
                     setValue={setValue}
                     open={open}
                     value={value}

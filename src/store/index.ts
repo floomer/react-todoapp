@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import taskReducer from './taskSlice'
-import cardReducer from './CardSlice'
+import cardReducer from './cardSlice'
 
 export const store = configureStore({
     reducer: {

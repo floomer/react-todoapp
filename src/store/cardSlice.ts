@@ -12,7 +12,7 @@ const cardSlice = createSlice({
         },
         deleteCard: (state, action) => {
             const currentCardID = state.findIndex(
-                (elem) => elem.id === action.payload.id
+                (elem) => elem.id === action.payload
             )
             state.splice(currentCardID, 1)
         },

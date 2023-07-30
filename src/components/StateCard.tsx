@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, {HTMLAttributes, useState} from 'react'
 import {
     Button,
-    Card,
+    Card as MuiCard,
     CardContent,
     Typography,
     StyledEngineProvider,
@@ -9,17 +9,16 @@ import {
     Box,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import { MuiTaskDialog } from './ui/Dialog/MuiTaskDialog'
+import { TaskDialog } from './ui/dialog/TaskDialog'
 import './styles/StateCard.css'
 import { useDispatch } from 'react-redux'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
-import { deleteCard } from '../store/CardSlice'
+import { deleteCard } from '../store/cardSlice'
+import {Card} from "../types";
 
-interface StateCardProps {
-    card: { id: number; name: string; color: string }
-    children: any
-    onDragOver: (event: React.DragEvent) => void
-    onDrop: (event: React.DragEvent) => void
+interface StateCardProps extends HTMLAttributes<HTMLElement>{
+    card: Card
+    children: React.ReactNode
 }
 
 export const StateCard: React.FC<StateCardProps> = ({ card, ...props }) => {
@@ -28,7 +27,7 @@ export const StateCard: React.FC<StateCardProps> = ({ card, ...props }) => {
 
     return (
         <StyledEngineProvider injectFirst>
-            <Card draggable={'true'} {...props}>
+            <MuiCard draggable {...props}>
                 <CardContent sx={{ backgroundColor: card.color }}>
                     <Typography gutterBottom>{card.name}</Typography>
                     <Box>
@@ -44,7 +43,7 @@ export const StateCard: React.FC<StateCardProps> = ({ card, ...props }) => {
                                 }}
                                 startIcon={<DeleteOutlinedIcon />}
                                 onClick={(event) => {
-                                    dispatch(deleteCard(event.target))
+                                    dispatch(deleteCard(card.id))
                                 }}
                             />
                         </Tooltip>
@@ -60,13 +59,13 @@ export const StateCard: React.FC<StateCardProps> = ({ card, ...props }) => {
                         </Tooltip>
                     </Box>
                 </CardContent>
-                <MuiTaskDialog
+                <TaskDialog
                     state={card.name}
                     open={open}
                     onClose={() => setOpen(false)}
                 />
                 {props.children}
-            </Card>
+            </MuiCard>
         </StyledEngineProvider>
     )
 }

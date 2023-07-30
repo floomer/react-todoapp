@@ -11,7 +11,7 @@ import {
 import Box from '@mui/material/Box'
 import { Card } from '../../../types'
 import { useDispatch } from 'react-redux'
-import { addCard } from '../../../store/CardSlice'
+import { addCard } from '../../../store/cardSlice'
 import MenuItem from '@mui/material/MenuItem'
 
 export interface StateDialogProps {
@@ -28,7 +28,7 @@ const style = {
     alignItems: 'flex-start',
 }
 
-export const MuiStateDialog: React.FC<StateDialogProps> = (props) => {
+export const StateArdDialog: React.FC<StateDialogProps> = (props) => {
     const { open, onClose } = props
     const [name, setName] = useState('')
     const [color, setColor] = useState('#1976D2')

@@ -8,7 +8,7 @@ interface ButtonProps {
     variant: 'text' | 'outlined' | 'contained'
 }
 
-export const MuiButton: React.FC<ButtonProps> = (props) => {
+export const AddButton: React.FC<ButtonProps> = (props) => {
     const { variant, buttonName, onClick } = props
     return (
         <Button

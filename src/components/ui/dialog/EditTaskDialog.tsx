@@ -18,7 +18,7 @@ const style = {
     borderRadius: '18px',
 }
 
-export const MuiEditTaskDialog: React.FC<TaskDialogProps> = (props) => {
+export const EditTaskDialog: React.FC<TaskDialogProps> = (props) => {
     const dispatch = useDispatch()
     const { open, onClose, task } = props
     const [newTaskName, setNewTaskName] = useState('')
